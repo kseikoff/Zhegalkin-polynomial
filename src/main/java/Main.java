@@ -1,62 +1,54 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        int n = 0;
-        try {
-            n = Integer.parseInt(reader.readLine());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Scanner scanner = new Scanner(System.in);
+        int number_of_variables;
+        number_of_variables = Integer.parseInt(scanner.nextLine());
 
         ArrayList<Integer> zhegalkin_polynomial = new ArrayList<>();
         StringBuilder result = new StringBuilder();
-        int[][] table = new int[(int) Math.pow(2, n)][n + 1];
-        int[] column = new int[(int) Math.pow(2, n)];
+        int[][] truth_table = new int[(int) Math.pow(2, number_of_variables)][number_of_variables + 1];
+        int[] column = new int[(int) Math.pow(2, number_of_variables)];
 
-        for(int i = 0; i < Math.pow(2, n); i++){
-            String temp = "";
-            while(temp.length() != n + 1){
-                try {
-                    temp = reader.readLine().replace(" ", "");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                for(int j = 0; j < temp.length(); j++){
-                    table[i][j] = temp.charAt(j) - '0';
-                    column[i] = table[i][j];
+        for(int i = 0; i < Math.pow(2, number_of_variables); i++){
+            String variable_values = "";
+            while(variable_values.length() != number_of_variables + 1){
+                variable_values = scanner.nextLine().replace(" ", "");
+                for(int j = 0; j < variable_values.length(); j++){
+                    truth_table[i][j] = variable_values.charAt(j) - '0';
+                    column[i] = truth_table[i][j];
                 }
             }
         }
         zhegalkin_polynomial.add(column[0]);
-        while(zhegalkin_polynomial.size() != (int) Math.pow(2, n)){
+        while(zhegalkin_polynomial.size() != (int) Math.pow(2, number_of_variables)){
             for(int i = 0; i < column.length - 1; i++){
                 column[i] = (column[i] + column[i + 1]) % 2;
             }
-            int[] temp = new int[column.length - 1];
-            System.arraycopy(column, 0, temp, 0, temp.length);
-            column = temp;
+            int[] smaller_column = new int[column.length - 1];
+            System.arraycopy(column, 0, smaller_column, 0, smaller_column.length);
+            column = smaller_column;
             zhegalkin_polynomial.add(column[0]);
         }
         for(int i = 0; i < zhegalkin_polynomial.size(); i++){
             if(zhegalkin_polynomial.get(i) == 1){
                 result.append(" + ");
-                StringBuilder temp = new StringBuilder().append(Integer.toBinaryString(i));
+                StringBuilder binary_number = new StringBuilder().append(Integer.toBinaryString(i));
                 if(i == 0){
                     result.append("1");
                 }
-                else if(temp.length() < n){
-                    temp = new StringBuilder("0".repeat(n - temp.length()) + temp);
+                else if(binary_number.length() < number_of_variables){
+                    binary_number = new StringBuilder("0".repeat(number_of_variables
+                            - binary_number.length()) + binary_number);
                 }
-                for(int j = 0; j < temp.length(); j++){
-                    if(temp.charAt(j) == '1'){
+                for(int j = 0; j < binary_number.length(); j++){
+                    if(binary_number.charAt(j) == '1'){
                         result.append((char)('a' + j));
                     }
                 }
-/*              we don't really care about the entered variable values in the table
+/*              we don't really need the entered variable values in the table
                   int count = 0;
                   result.append(" + ");
                   for(int j = 0; j < n; j++){
