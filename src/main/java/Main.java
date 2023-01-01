@@ -21,7 +21,7 @@ public class Main {
             String temp = "";
             while(temp.length() != n + 1){
                 try {
-                    temp = reader.readLine();
+                    temp = reader.readLine().replace(" ", "");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -43,20 +43,34 @@ public class Main {
         }
         for(int i = 0; i < zhegalkin_polynomial.size(); i++){
             if(zhegalkin_polynomial.get(i) == 1){
-                int count = 0;
                 result.append(" + ");
-                for(int j = 0; j < n; j++){
-                    if(table[i][j] == 0){
-                        count++;
-                        if(count == n && table[i][j + 1] == 1){
-                            result.append("1");
-                        }
-                    }
-                    if(table[i][j] == 1){
+                String temp = Integer.toBinaryString(i);
+                if(i == 0){
+                    result.append("1");
+                }
+                else if(temp.length() < n){
+                    temp = "0".repeat(n - temp.length()) + temp;
+                }
+                for(int j = 0; j < temp.length(); j++){
+                    if(temp.charAt(j) == '1'){
                         result.append((char)('a' + j));
                     }
                 }
-            }
+/*              we don't really care about the entered variable values in the table
+                  int count = 0;
+                  result.append(" + ");
+                  for(int j = 0; j < n; j++){
+                      if(table[i][j] == 0){
+                          count++;
+                          if(count == n && table[i][j + 1] == 1){
+                              result.append("1");
+                          }
+                      }
+                      if(table[i][j] == 1){
+                          result.append((char)('a' + j));
+                      }
+                }
+*/            }
         }
         System.out.println(result.length() > 0 ? result.substring(3) : "0");
     }
