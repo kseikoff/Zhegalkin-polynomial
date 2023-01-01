@@ -44,12 +44,12 @@ public class Main {
         for(int i = 0; i < zhegalkin_polynomial.size(); i++){
             if(zhegalkin_polynomial.get(i) == 1){
                 result.append(" + ");
-                String temp = Integer.toBinaryString(i);
+                StringBuilder temp = new StringBuilder().append(Integer.toBinaryString(i));
                 if(i == 0){
                     result.append("1");
                 }
                 else if(temp.length() < n){
-                    temp = "0".repeat(n - temp.length()) + temp;
+                    temp = new StringBuilder("0".repeat(n - temp.length()) + temp);
                 }
                 for(int j = 0; j < temp.length(); j++){
                     if(temp.charAt(j) == '1'){
