@@ -54,11 +54,11 @@ public class Main {
                   for(int j = 0; j < n; j++){
                       if(table[i][j] == 0){
                           count++;
-                          if(count == n && table[i][j + 1] == 1){
+                          if(count == n && truth_table[i][j + 1] == 1){
                               result.append("1");
                           }
                       }
-                      if(table[i][j] == 1){
+                      if(truth_table[i][j] == 1){
                           result.append((char)('a' + j));
                       }
                 }
