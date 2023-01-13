@@ -23,10 +23,10 @@ public class Main {
         zhegalkin_polynomial.add(column[0]);
         int last_element = column.length;
         while(zhegalkin_polynomial.size() != (int) Math.pow(2, number_of_variables)){
-            last_element--;
             for(int i = 0; i < column.length - 1; i++){
                 column[i] = (column[i] + column[i + 1]) % 2;
             }
+            last_element--;
             column[last_element] = 0;
             zhegalkin_polynomial.add(column[0]);
         }
@@ -42,7 +42,7 @@ public class Main {
                         }
                     }
                 }
-          }
+            }
         }
         System.out.println(result.length() > 0 ? result.substring(3) : "0");
     }
